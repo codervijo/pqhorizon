@@ -1,0 +1,55 @@
+# lamill.toml — per-site config consumed by lamill (portfolio/ops) and rankmill (content/audits).
+# [content] = stable identity, authored by hand. [todo] = volatile work state.
+# rankmill output lives in sites/<domain>/rankmill-output/, not here.
+
+schema = "lamill-toml-v1"
+
+[deploy]
+platform = "cf-pages"
+production_branch = "main"
+custom_domains = [
+    "pqhorizon.com",
+]
+
+[index]
+indexnow_key = "c4e59d189c903a23d50675b08b25ebaa"
+indexnow_enabled = true
+
+[stack]
+framework = "astro"
+
+# Tracked todos for pqhorizon.com. status: "done" | "open".
+[[todo]]
+status = "open"
+priority = "medium"
+task = "Check SEO: GSC indexation + coverage (revisit ~2026-07-14)"
+
+[[todo]]
+status = "open"
+priority = "medium"
+task = "Verify GA4 is receiving data (check Realtime after first traffic)"
+
+[[todo]]
+status = "open"
+priority = "low"
+task = "Confirm GSC verification + sitemap submitted (re-run deploy if it timed out)"
+
+[content]
+# Declarative content identity for this site.
+# Authored by the human; consumed by rankmill to generate drafts and run audits.
+# Leave fields empty until you have a deliberate answer. Empty is better than wrong.
+site_type = "tool"
+primary_keyword = "post-quantum cryptography readiness scanner"
+secondary_keywords = [
+    "answer PQC line item on a security questionnaire",
+    "NIST migration standards",
+    "read TLS handshake for quantum exposure",
+    "harvest-now-decrypt-later",
+    "2029 quantum readiness",
+    "SOC 2 HIPAA CMMC post-quantum compliance",
+]
+icp = "The sharpest fit is a mid-market company selling into regulated enterprises or government supply chains that is starting to see PQC or quantum-readiness questions in RFPs, vendor security questionnaires, or compliance reviews — a company that can't answer \"show us your cryptographic inventory\" and is about to lose or delay a deal. Adjacent rings: sub-enterprise healthcare orgs handling PHI with long retention windows (where harvest-now-decrypt-later is a real HIPAA-adjacent risk), and defense/aerospace subcontractors pursuing CMMC 2.0 Level 3. The common thread is an external, dated forcing function and no in-house crypto expertise. The economic buyer is a CISO or head of security/IT — often the only security leader on staff — who personally owns audit and questionnaire responses."
+urgency_trigger = "upcoming 2029 readiness deadline and immediate RFP/compliance questions that can block deals"
+penalty = "lost or delayed sales/contracts, failed audits or compliance reviews, and recorded data vulnerable to future quantum decryption"
+tone = "practical, deadline-driven, action-oriented"
+law = ""                  # statute or regulation if applicable, else empty
