@@ -60,7 +60,7 @@ export default function LandingPage() {
         onScanClick={() => scanRef.current?.scrollIntoView({ behavior: "smooth" })}
         onLeadClick={() => leadRef.current?.scrollIntoView({ behavior: "smooth" })}
       />
-      <div ref={scanRef}>
+      <div ref={scanRef} id="scan">
         <ScanSection />
       </div>
       <HowItWorks />
@@ -785,6 +785,35 @@ function Footer() {
             to wait.
           </p>
         </div>
+
+        <nav
+          aria-label="Guides"
+          className="mt-10 grid grid-cols-1 gap-x-8 gap-y-2 border-t border-border pt-8 text-sm sm:grid-cols-2 lg:grid-cols-3"
+        >
+          <span className="col-span-full mb-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+            Post-quantum guides
+          </span>
+          {[
+            ["/post-quantum-readiness/", "Post-quantum readiness self-check"],
+            ["/post-quantum-cryptography-migration-checklist/", "PQC migration checklist"],
+            ["/tls-1-3-post-quantum/", "TLS 1.3 post-quantum key exchange"],
+            ["/what-is-the-purpose-of-post-quantum-cryptography/", "What is post-quantum cryptography for?"],
+            ["/nist-post-quantum-cryptography-standards/", "NIST PQC standards (FIPS 203/204/205)"],
+            ["/nist-post-quantum-cryptography-migration-guidance/", "NIST migration guidance"],
+            ["/harvest-now-decrypt-later/", "Harvest now, decrypt later"],
+            ["/post-quantum-cryptography-for-security-questionnaires/", "PQC on security questionnaires & RFPs"],
+            ["/nist-post-quantum-cryptography-standards-2026/", "NIST PQC standards: 2026 status"],
+          ].map(([href, label]) => (
+            <a
+              key={href}
+              href={href}
+              className="text-muted-foreground transition-colors hover:text-foreground"
+            >
+              {label}
+            </a>
+          ))}
+        </nav>
+
         <div className="mt-6 border-t border-border pt-6 text-xs text-muted-foreground">
           The free preview inspects only public TLS endpoints, performs no
           authenticated access, and stores no scan data. Not legal or compliance

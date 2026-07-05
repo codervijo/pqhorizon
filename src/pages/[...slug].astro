@@ -1,0 +1,253 @@
+---
+// src/pages/[...slug].astro
+// Renders each ./content/*.md guide to a static, crawlable HTML page at /<slug>/.
+// @astrojs/sitemap auto-includes these generated routes in sitemap-index.xml, so
+// Google discovers them via the robots.txt-declared sitemap. SEO head (title,
+// description, canonical-with-trailing-slash, OG/Twitter, Article + Breadcrumb
+// JSON-LD) is inlined here per page.
+import "../styles/global.css";
+import { getCollection, render } from "astro:content";
+
+export async function getStaticPaths() {
+  const guides = await getCollection("guides");
+  return guides.map((entry) => ({
+    params: { slug: entry.data.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const d = entry.data;
+
+const site = "https://pqhorizon.com";
+const canonical = `${site}/${d.slug}/`;
+const title = `${d.title} — PQHorizon`;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": `${canonical}#article`,
+      headline: d.title,
+      description: d.description,
+      inLanguage: "en",
+      ...(d.last_updated
+        ? { dateModified: d.last_updated.toISOString().slice(0, 10) }
+        : {}),
+      mainEntityOfPage: canonical,
+      author: { "@id": `${site}/#organization` },
+      publisher: { "@id": `${site}/#organization` },
+      isPartOf: { "@id": `${site}/#website` },
+    },
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: `${site}/` },
+        { "@type": "ListItem", position: 2, name: d.title, item: canonical },
+      ],
+    },
+  ],
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={d.description} />
+    <meta name="theme-color" content="#0d1418" />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    {!d.evergreen && <meta name="robots" content="index, follow" />}
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content={d.title} />
+    <meta property="og:description" content={d.description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content="PQHorizon" />
+
+    <!-- Twitter card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={d.title} />
+    <meta name="twitter:description" content={d.description} />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    />
+
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </head>
+  <body>
+    <div class="page">
+      <header class="topbar">
+        <a href="/" class="brand">PQHorizon</a>
+        <a href="/#scan" class="cta-btn">Run a free scan</a>
+      </header>
+
+      <main>
+        <nav class="crumbs" aria-label="Breadcrumb">
+          <a href="/">Home</a> <span aria-hidden="true">/</span>
+          <span>{d.title}</span>
+        </nav>
+
+        <article class="prose">
+          <Content />
+        </article>
+
+        <aside class="endcta">
+          <p>See where your public TLS and certificates stand against the NIST
+            post-quantum standards — no signup, no install.</p>
+          <a href="/#scan" class="cta-btn">Run a free scan →</a>
+        </aside>
+
+        <p class="backhome"><a href="/">← Back to PQHorizon</a></p>
+      </main>
+    </div>
+  </body>
+</html>
+
+<style>
+  .page {
+    min-height: 100vh;
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+  }
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 48rem;
+    margin: 0 auto;
+    padding: 1.25rem 1.5rem;
+  }
+  .brand {
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--foreground);
+    text-decoration: none;
+  }
+  main {
+    max-width: 48rem;
+    margin: 0 auto;
+    padding: 0 1.5rem 4rem;
+  }
+  .crumbs {
+    font-size: 0.8rem;
+    color: var(--muted-foreground);
+    margin: 0.5rem 0 2rem;
+  }
+  .crumbs a { color: var(--muted-foreground); text-decoration: none; }
+  .crumbs a:hover { color: var(--foreground); }
+  .crumbs span { margin: 0 0.35rem; }
+
+  .cta-btn {
+    display: inline-block;
+    background: var(--primary);
+    color: var(--primary-foreground);
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 0.55rem 1rem;
+    border-radius: var(--radius);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .cta-btn:hover { opacity: 0.92; }
+
+  /* Article prose — no typography plugin installed, so styled explicitly. */
+  .prose { line-height: 1.7; font-size: 1.02rem; }
+  .prose :global(h1) {
+    font-size: 2rem;
+    line-height: 1.2;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin: 0 0 1.25rem;
+  }
+  .prose :global(h2) {
+    font-size: 1.4rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin: 2.5rem 0 0.9rem;
+    padding-top: 0.5rem;
+  }
+  .prose :global(h3) {
+    font-size: 1.12rem;
+    font-weight: 600;
+    margin: 1.75rem 0 0.6rem;
+  }
+  .prose :global(p) { margin: 0 0 1.1rem; }
+  .prose :global(ul),
+  .prose :global(ol) { margin: 0 0 1.1rem; padding-left: 1.4rem; }
+  .prose :global(li) { margin: 0.35rem 0; }
+  .prose :global(a) {
+    color: var(--primary);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .prose :global(strong) { color: var(--foreground); font-weight: 600; }
+  .prose :global(blockquote) {
+    border-left: 3px solid var(--primary);
+    margin: 1.25rem 0;
+    padding: 0.25rem 0 0.25rem 1rem;
+    color: var(--muted-foreground);
+    font-style: italic;
+  }
+  .prose :global(code) {
+    font-family: var(--font-mono);
+    font-size: 0.86em;
+    background: var(--surface-2);
+    padding: 0.12em 0.35em;
+    border-radius: 4px;
+  }
+  .prose :global(pre) {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1rem;
+    overflow-x: auto;
+    margin: 0 0 1.25rem;
+  }
+  .prose :global(pre code) { background: none; padding: 0; }
+  .prose :global(hr) {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 2.5rem 0;
+  }
+  .prose :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 0 1.25rem;
+    font-size: 0.92rem;
+    display: block;
+    overflow-x: auto;
+  }
+  .prose :global(th),
+  .prose :global(td) {
+    border: 1px solid var(--border);
+    padding: 0.5rem 0.7rem;
+    text-align: left;
+  }
+  .prose :global(th) { background: var(--surface-2); font-weight: 600; }
+  .prose :global(em) { color: var(--muted-foreground); }
+
+  .endcta {
+    margin: 3rem 0 2rem;
+    padding: 1.5rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+  }
+  .endcta p { margin: 0 0 1rem; color: var(--muted-foreground); }
+  .backhome { font-size: 0.9rem; }
+  .backhome a { color: var(--muted-foreground); text-decoration: none; }
+  .backhome a:hover { color: var(--foreground); }
+</style>
