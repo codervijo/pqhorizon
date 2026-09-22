@@ -10,7 +10,7 @@ secondary_keywords:
   - ML-KEM ML-DSA SLH-DSA
 search_intent: "Non-cryptographer security lead wants to understand what the NIST PQC standards are and what each one is for, without the math."
 word_count: 870
-last_updated: 2026-07-04
+last_updated: 2026-09-22
 evergreen: true
 ---
 
@@ -18,7 +18,7 @@ evergreen: true
 
 If you keep seeing "FIPS 203," "ML-KEM," and "ML-DSA" in vendor docs or a security questionnaire and want to know what they actually are — without a cryptography lecture — this page is the plain-terms version. You'll leave knowing what each standard does, when to use it, and what it replaces in your existing stack.
 
-In August 2024, NIST published the first three finalized post-quantum cryptography standards [SOURCE: NIST FIPS 203/204/205]. That matters because it ended the "wait for the standard" excuse: the algorithms you migrate *to* are now official, named, and stable. Three standards, two jobs.
+On [August 13, 2024](https://www.nist.gov/news-events/news/2024/08/nist-releases-first-3-finalized-post-quantum-encryption-standards), NIST published the first three finalized post-quantum cryptography standards: [FIPS 203](https://csrc.nist.gov/pubs/fips/203/final), [FIPS 204](https://csrc.nist.gov/pubs/fips/204/final), and [FIPS 205](https://csrc.nist.gov/pubs/fips/205/final). That matters because it ended the "wait for the standard" excuse: the algorithms you migrate *to* are now official, named, and stable. Three standards, two jobs.
 
 ## The two jobs cryptography does — and what breaks
 
@@ -57,7 +57,7 @@ If you migrate one thing first, it's key establishment — because recorded-toda
 
 ## What about FALCON / FN-DSA?
 
-NIST also selected FALCON, to be standardized as **FN-DSA (FIPS 206)** — a lattice signature scheme with notably compact signatures, useful where signature size is tight. As of this writing FIPS 206 is forthcoming rather than final [VERIFY: FIPS 206 / FN-DSA publication status]. ML-DSA (FIPS 204) is the default to plan around today.
+NIST also selected FALCON, to be standardized as **FN-DSA (FIPS 206)** — a lattice signature scheme with notably compact signatures, useful where signature size is tight. As of September 2026, NIST's [standardization page](https://csrc.nist.gov/projects/post-quantum-cryptography/post-quantum-cryptography-standardization) still lists FIPS 206 as in development — it is not yet a final standard. ML-DSA (FIPS 204) is the default to plan around today.
 
 ## How to choose — a cheat sheet
 

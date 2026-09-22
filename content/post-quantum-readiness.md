@@ -10,7 +10,7 @@ secondary_keywords:
   - cryptographic inventory
 search_intent: "Security lead needs to know whether their organization is exposed to quantum risk and where to begin — practical self-assessment, not theory."
 word_count: 1180
-last_updated: 2026-07-04
+last_updated: 2026-09-22
 evergreen: true
 ---
 
@@ -66,8 +66,8 @@ The [post-quantum migration checklist](/post-quantum-cryptography-migration-chec
 Three forcing functions, none of which wait for the CRQC:
 
 - **The data-lifetime math.** Cryptographer Michele Mosca's framing: if the time your data must stay secret, plus the time it takes you to migrate, is greater than the time until a CRQC exists, you are already too late. For anything with a 7–10 year confidentiality requirement, that inequality is likely already true.
-- **The standards are final.** NIST published the first post-quantum standards — FIPS 203, 204, and 205 — in August 2024 [SOURCE: NIST FIPS 203/204/205]. There is no longer a "wait for the standard" excuse; the migration target exists.
-- **The deadlines are landing in your contracts.** Google has stated a goal of having post-quantum cryptography deployed by 2029 [SOURCE: Google post-quantum roadmap] [VERIFY: exact 2029 wording/date], NIST's draft transition guidance signals deprecation of RSA/ECC around 2030 [SOURCE: NIST IR 8547 draft] [VERIFY: exact deprecation years], and these dates are already showing up as line items in RFPs, vendor security questionnaires, and cyber-insurance renewals. If you sell into regulated enterprises, the deadline that matters isn't the quantum computer's — it's your customer's next audit.
+- **The standards are final.** NIST published the first post-quantum standards — FIPS 203, 204, and 205 — [in August 2024](https://www.nist.gov/news-events/news/2024/08/nist-releases-first-3-finalized-post-quantum-encryption-standards). There is no longer a "wait for the standard" excuse; the migration target exists.
+- **The deadlines are landing in your contracts.** Google has [set 2029 as its timeline](https://blog.google/innovation-and-ai/technology/safety-security/cryptography-migration-timeline/) for post-quantum migration, NIST's draft transition guidance ([IR 8547](https://csrc.nist.gov/pubs/ir/8547/ipd)) deprecates 112-bit RSA/ECC (such as RSA-2048) after 2030 and disallows quantum-vulnerable algorithms after 2035, and these dates are already showing up as line items in RFPs, vendor security questionnaires, and cyber-insurance renewals. If you sell into regulated enterprises, the deadline that matters isn't the quantum computer's — it's your customer's next audit.
 
 ## Your defensible first move
 

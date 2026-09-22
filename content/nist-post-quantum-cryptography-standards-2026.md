@@ -9,7 +9,7 @@ secondary_keywords:
   - FIPS 203 204 205 status
 search_intent: "Reader wants the current (2026) status of NIST's post-quantum standards and the migration timeline dates."
 word_count: 630
-last_updated: 2026-07-04
+last_updated: 2026-09-22
 evergreen: false
 ---
 
@@ -27,9 +27,9 @@ The three core standards have been final since August 2024 and remain the stable
 
 Still forthcoming:
 
-- **FIPS 206 — FN-DSA** (FALCON, compact lattice signatures). Selected but not yet published as a final standard [VERIFY: FIPS 206 status as of 2026].
-- **Additional signature schemes.** NIST's "on-ramp" process to diversify signature options beyond lattices is ongoing [SOURCE: NIST PQC additional signatures on-ramp] [VERIFY: current round/status].
-- **HQC** was selected in 2025 as a backup key-establishment mechanism based on different (code-based) math than ML-KEM, to hedge against a lattice weakness; its standard is in development [SOURCE: NIST HQC selection] [VERIFY: HQC standardization status].
+- **FIPS 206 — FN-DSA** (FALCON, compact lattice signatures). Selected but not yet published as a final standard; as of September 2026, NIST's [standardization page](https://csrc.nist.gov/projects/post-quantum-cryptography/post-quantum-cryptography-standardization) still lists it as in development.
+- **Additional signature schemes.** NIST's "on-ramp" process to diversify signature options beyond lattices is ongoing: [nine candidates advanced to a third round](https://www.nist.gov/news-events/news/2026/05/nine-candidates-advance-third-round-additional-digital-signatures-pqc) in May 2026, a phase NIST expects to last about two years. One of them, HAWK, has since been [withdrawn by its submission team](https://csrc.nist.gov/projects/pqc-dig-sig/round-3-additional-signatures).
+- **HQC** was selected in 2025 as a backup key-establishment mechanism based on different (code-based) math than ML-KEM, to hedge against a lattice weakness; its standard is in development. At [selection](https://www.nist.gov/news-events/news/2025/03/nist-selects-hqc-fifth-algorithm-post-quantum-encryption), NIST said it planned a draft standard for public comment in about a year and a finalized standard in 2027.
 
 The headline for planning: **the algorithms you migrate to today (ML-KEM, ML-DSA) are settled.** The forthcoming items are additions and hedges, not replacements — they're no reason to wait.
 
@@ -37,10 +37,10 @@ The headline for planning: **the algorithms you migrate to today (ML-KEM, ML-DSA
 
 The migration schedule, not the algorithm list, is what sets your urgency:
 
-- **~2030 — deprecation** of RSA and elliptic-curve algorithms, per NIST's draft transition guidance (IR 8547) [SOURCE: NIST IR 8547 draft] [VERIFY: exact deprecation year in final IR 8547].
-- **~2035 — disallowance** of those classical algorithms [VERIFY: exact disallowance year].
-- **2029 — Google's stated goal** to have post-quantum cryptography deployed [SOURCE: Google post-quantum roadmap] [VERIFY: exact 2029 wording/date]. Because so much traffic flows through Google's ecosystem, this date functions as a de-facto readiness anchor for the wider web.
-- **CNSA 2.0 milestones** for U.S. national-security systems run on their own, generally earlier, schedule [SOURCE: NSA CNSA 2.0] [VERIFY: current CNSA 2.0 milestone dates].
+- **2030 — deprecation** of RSA and elliptic-curve algorithms at the 112-bit security level (such as RSA-2048), per NIST's draft transition guidance ([IR 8547](https://csrc.nist.gov/pubs/ir/8547/ipd), initial public draft, November 2024; not yet final).
+- **2035 — disallowance** of all quantum-vulnerable RSA, elliptic-curve, and Diffie-Hellman algorithms under the same draft.
+- **2029 — Google's migration timeline.** In March 2026, Google [announced](https://blog.google/innovation-and-ai/technology/safety-security/cryptography-migration-timeline/) it is "setting a timeline for post-quantum cryptography migration to 2029." Because so much traffic flows through Google's ecosystem, this date functions as a de-facto readiness anchor for the wider web.
+- **CNSA 2.0 milestones** for U.S. national-security systems run on their own, earlier schedule ([NSA CNSA 2.0 advisory](https://media.defense.gov/2025/May/30/2003728741/-1/-1/0/CSA_CNSA_2.0_ALGORITHMS.PDF)): new acquisitions must be compliant from January 1, 2027; software/firmware signing and networking equipment must use CNSA 2.0 exclusively by 2030; web browsers/servers, cloud services, and operating systems by 2033.
 
 For a mid-market organization, the operative deadline usually isn't any of these directly — it's your customer's next audit or RFP, which inherits them. Those PQC line items are landing in [security questionnaires](/post-quantum-cryptography-for-security-questionnaires/) now, well ahead of 2030.
 
@@ -56,6 +56,6 @@ The 2026 status doesn't change the playbook, it sharpens the urgency: the standa
 
 ---
 
-*Last updated: 2026-07-04. Dates and standardization statuses marked [VERIFY] should be reconfirmed against primary NIST/IETF sources before republication.*
+*Last updated: 2026-09-22. Dates and standardization statuses checked against primary NIST, NSA, and Google sources on that date.*
 
 *Related: [NIST post-quantum standards](/nist-post-quantum-cryptography-standards/) · [NIST migration guidance](/nist-post-quantum-cryptography-migration-guidance/) · [Post-quantum readiness self-check](/post-quantum-readiness/)*

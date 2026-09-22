@@ -9,7 +9,7 @@ secondary_keywords:
   - quantum threat to encryption
 search_intent: "Top-of-funnel reader wants a clear, non-hype explanation of why post-quantum cryptography exists and what problem it solves."
 word_count: 820
-last_updated: 2026-07-04
+last_updated: 2026-09-22
 evergreen: true
 ---
 
@@ -42,7 +42,7 @@ The natural objection is: "If the machine doesn't exist yet, why act?" Three rea
 
 - **Harvest now, decrypt later.** An adversary can record your encrypted data *today* and simply store it until a quantum computer can decrypt it. Anything that must stay confidential for years — health records, financial data, legal files, trade secrets — is effectively exposed the moment it crosses the wire, even though the decryption happens later. That's the sharpest reason to act early, and we cover it in depth in [harvest now, decrypt later](/harvest-now-decrypt-later/).
 - **Migration is slow.** Replacing cryptography across certificates, protocols, code-signing, and hardware takes years for a real organization. You have to start well before the threat lands.
-- **The standards and deadlines already exist.** In August 2024, NIST published the first finished post-quantum standards [SOURCE: NIST FIPS 203/204/205], so the replacement algorithms are ready. And forcing dates are appearing in the real world — Google has stated a goal of deploying post-quantum cryptography by 2029 [SOURCE: Google post-quantum roadmap] [VERIFY: exact 2029 date], and PQC line items are showing up in RFPs and security questionnaires now.
+- **The standards and deadlines already exist.** In August 2024, NIST [published the first finished post-quantum standards](https://www.nist.gov/news-events/news/2024/08/nist-releases-first-3-finalized-post-quantum-encryption-standards) (FIPS 203, 204, and 205), so the replacement algorithms are ready. And forcing dates are appearing in the real world — Google has [set 2029 as its timeline](https://blog.google/innovation-and-ai/technology/safety-security/cryptography-migration-timeline/) for post-quantum cryptography migration, and PQC line items are showing up in RFPs and security questionnaires now.
 
 ## The tools of post-quantum cryptography
 

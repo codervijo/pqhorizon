@@ -72,6 +72,8 @@ All CTAs deep-link to `/#scan` (the landing-page scan section, anchored `id="sca
 
 Grep the batch for `[SOURCE: ...]` and `[VERIFY: ...]`:
 
+**Resolved 2026-09-22:** every marker below was replaced with primary-source links (NIST CSRC / nist.gov, NSA CNSA 2.0 advisory, Google blog). Re-check the dated #9 page statuses (FIPS 206, HQC draft, on-ramp round 3, IR 8547 final) each quarter.
+
 - `[SOURCE: NIST FIPS 203/204/205]` — link to the three published FIPS.
 - `[SOURCE: NIST IR 8547 draft]` — transition guidance; confirm final deprecation (~2030) / disallowance (~2035) years.
 - `[SOURCE: NIST NCCoE SP 1800-38]` — Migration to PQC practice guide.

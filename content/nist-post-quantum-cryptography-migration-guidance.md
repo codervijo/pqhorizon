@@ -10,7 +10,7 @@ secondary_keywords:
   - NIST IR 8547
 search_intent: "Security lead needs to know what NIST's migration guidance obligates them to do and how to sequence it, not just what the algorithms are."
 word_count: 800
-last_updated: 2026-07-04
+last_updated: 2026-09-22
 evergreen: true
 ---
 
@@ -22,7 +22,7 @@ Two things to hold separate. The **standards** (FIPS 203/204/205) define the alg
 
 ## The core requirement: know your cryptography first
 
-Every strand of NIST's migration guidance starts in the same place — **you cannot migrate what you haven't inventoried.** NIST's National Cybersecurity Center of Excellence (NCCoE) ran a dedicated project, *Migration to Post-Quantum Cryptography* (NIST SP 1800-38) [SOURCE: NIST NCCoE SP 1800-38], and the first workstream is cryptographic discovery: automated tooling to find where public-key crypto lives across your systems, protocols, and data.
+Every strand of NIST's migration guidance starts in the same place — **you cannot migrate what you haven't inventoried.** NIST's National Cybersecurity Center of Excellence (NCCoE) ran a dedicated project, *Migration to Post-Quantum Cryptography* (NIST SP 1800-38, published as a [preliminary draft practice guide](https://csrc.nist.gov/pubs/sp/1800/38/iprd-%281%29)), and the first workstream is cryptographic discovery: automated tooling to find where public-key crypto lives across your systems, protocols, and data.
 
 The practical obligation on you: produce a **cryptographic inventory** — every place you use RSA, ECDSA, ECDH, and Diffie-Hellman, across certificates, TLS/VPN/SSH, code signing, and data at rest. This is the artifact an auditor or customer actually asks to see, and it's the input to every later decision.
 
@@ -44,7 +44,7 @@ NIST doesn't just want you on new algorithms once — it wants your systems buil
 
 ## The transition timeline
 
-NIST has signaled a deprecation and disallowance schedule for classical public-key algorithms in draft guidance (NIST IR 8547, *Transition to Post-Quantum Cryptography Standards*) [SOURCE: NIST IR 8547 draft]. The direction is clear even where exact years are still being finalized: RSA and elliptic-curve algorithms are slated for **deprecation around 2030 and disallowance around 2035** [VERIFY: exact deprecation/disallowance years in the final IR 8547]. For U.S. national-security systems, the NSA's **CNSA 2.0** suite sets its own, generally earlier, adoption milestones [SOURCE: NSA CNSA 2.0] [VERIFY: exact CNSA 2.0 dates].
+NIST has signaled a deprecation and disallowance schedule for classical public-key algorithms in draft guidance ([NIST IR 8547](https://csrc.nist.gov/pubs/ir/8547/ipd), *Transition to Post-Quantum Cryptography Standards*, initial public draft, November 2024 — not yet final as of September 2026). In that draft, quantum-vulnerable RSA and elliptic-curve algorithms at the 112-bit security level (such as RSA-2048) are **deprecated after 2030**, and all quantum-vulnerable RSA, elliptic-curve, and Diffie-Hellman algorithms are **disallowed after 2035**. For U.S. national-security systems, the NSA's [**CNSA 2.0**](https://media.defense.gov/2025/May/30/2003728741/-1/-1/0/CSA_CNSA_2.0_ALGORITHMS.PDF) suite runs a separate, staggered schedule: new National Security Systems acquisitions must be CNSA 2.0 compliant from **January 1, 2027**; software/firmware signing and networking equipment must use it exclusively by **2030**; web browsers/servers, cloud services, and operating systems by **2033**. The overall federal goal under National Security Memorandum 10 is quantum resistance by **2035**.
 
 Why this matters even if you're not a federal contractor: these federal timelines become the *de facto* schedule for the private sector. They flow into vendor requirements, cyber-insurance expectations, and the PQC line items now appearing in commercial RFPs and [security questionnaires](/post-quantum-cryptography-for-security-questionnaires/). Your effective deadline is usually your customer's audit, and their audit is anchored to these dates.
 
