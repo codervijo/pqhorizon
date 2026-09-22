@@ -144,7 +144,7 @@ function Hero({
       <div className="relative mx-auto max-w-6xl px-6 pt-20 pb-24 sm:pt-28 sm:pb-32">
         <div className="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-3 py-1 text-xs text-muted-foreground font-mono-tight">
           <span className="h-1.5 w-1.5 rounded-full bg-primary" />
-          NIST IR 8547 · FIPS 203 / 204 · CNSA 2.0 deadline 2029
+          NIST IR 8547 · FIPS 203 / 204 · CNSA 2.0 NSS gate 2027
         </div>
         <h1 className="mt-6 max-w-3xl text-4xl font-semibold tracking-tight sm:text-5xl md:text-6xl">
           Nation-states are recording your encrypted traffic{" "}
@@ -154,7 +154,7 @@ function Hero({
         <p className="mt-6 max-w-2xl text-lg text-muted-foreground">
           See what breaks before your auditor asks. PQHorizon builds a defensible
           cryptographic inventory and maps every finding to the NIST PQ migration
-          standards — before your 2029 deadline turns into a fire drill.
+          standards — before your compliance deadline turns into a fire drill.
         </p>
         <div className="mt-8 flex flex-wrap items-center gap-3">
           <button
@@ -173,7 +173,7 @@ function Hero({
 
         <div className="mt-14 grid gap-4 sm:grid-cols-3">
           <HeroStat label="Harvest-now-decrypt-later" value="Active today" tone="alert" />
-          <HeroStat label="Federal PQ deadline" value="2029 (CNSA 2.0)" tone="warn" />
+          <HeroStat label="NSS acquisition gate" value="2027 (CNSA 2.0)" tone="warn" />
           <HeroStat label="Avg. cert lifetime" value="90–398 days" tone="info" />
         </div>
       </div>
