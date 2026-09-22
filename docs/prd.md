@@ -1,10 +1,10 @@
 ---
 project: pqhorizon.com
 prd_version: 1
-project_version: v0.A
+project_version: v1.A.3
 status: planned
 owner: Vijo
-last_updated: 2026-06-30
+last_updated: 2026-09-22
 ---
 
 # pqhorizon.com — PRD
@@ -43,7 +43,11 @@ Two-level versioning convention (canonical: `sites/portfolio/AI_AGENTS.md`):
 | Phase | Theme | Features | Status |
 |---|---|---|---|
 | **v0.A** | scaffolded | `portfolio new bootstrap` ran; standard files written; git initialized | ✅ |
-| **v1.A** | <fill in> | <fill in> | planned |
+| **v1.A** | PQC SEO content cluster (batch 1) | 9 Markdown guides in `content/` rendered as static crawlable pages (`[...slug].astro`), Article + Breadcrumb JSON-LD, footer guide nav | ✅ |
+| **v1.A.1** | sitemap lastmod | per-page `<lastmod>` from content frontmatter | ✅ |
+| **v1.A.2** | CNSA 2.0 deadline fix | removed false "2029 CNSA 2.0" claim; hero stat → 2027 NSS acquisition gate; meta descriptions updated | ✅ (not yet deployed) |
+| **v1.A.3** | content source fill | all `[SOURCE]`/`[VERIFY]` markers replaced with primary-source facts + links | ✅ (not yet deployed) |
+| **v1.B** | re-home scan + lead backends | (1) `POST /api/scan` — live TLS handshake, X.509 chain parse, PQ-hybrid group check, `ScanResult` for the free-scan UI (runtime TBD: needs raw TLS introspection, which a static deploy can't do); (2) `POST /api/lead` — lead capture (email / company / timeline) to a form backend + datastore. Both currently 405 on live since the Astro port; see `src/lib/server-todo.md` | planned |
 
 ## 6. Open questions
 
