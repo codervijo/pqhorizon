@@ -31,7 +31,7 @@ Migration is not a rip-and-replace. It's a phased program: **inventory → prior
 
 This is the load-bearing phase. The deliverable is a single document an auditor would accept.
 
-- [ ] **Public-facing TLS.** Every external domain and endpoint: TLS version, cipher suite, negotiated key-exchange group, certificate signature and public-key algorithm. (You can bootstrap this with our [free scan](/#scan).)
+- [ ] **Public-facing TLS.** Every external domain and endpoint: TLS version, cipher suite, negotiated key-exchange group, certificate signature and public-key algorithm. (Bootstrap it with the [one-line handshake check](/tls-1-3-post-quantum/#check-your-own-connections).)
 - [ ] **Certificates.** Enumerate all certs — public and internal. Record signature algorithm (RSA/ECDSA), key size, issuer, and expiry. Expiring certs are your cheapest migration opportunities.
 - [ ] **Key exchange in transit.** VPN, SSH, service-to-service mTLS, database connections, message queues.
 - [ ] **Data at rest.** Backups, archives, object storage, databases. For each, record the key-wrapping/key-establishment algorithm and — critically — the required confidentiality lifetime.
@@ -88,7 +88,7 @@ Signatures are slower to migrate than key exchange because they touch PKI hierar
 
 The inventory is where most teams stall, so start there and start narrow. Your public TLS is the highest-signal, lowest-effort slice — it's internet-visible, it's what a customer's security team will check first, and it maps cleanly to the NIST standards.
 
-**[Run a free scan](/#scan)** to generate the public-TLS-and-certificate portion of your inventory automatically, with each finding ranked by severity and tied to the relevant NIST standard. It's the first checklist item done in under a minute, and it gives you a defensible artifact to build the rest of the plan around.
+Start with the item you can finish today: **[check your public TLS handshakes](/tls-1-3-post-quantum/#check-your-own-connections)** and record the negotiated group and certificate algorithm for each domain. That's the first checklist item done, and a defensible artifact to build the rest of the plan around.
 
 ---
 

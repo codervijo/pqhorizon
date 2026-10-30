@@ -78,7 +78,7 @@ Publishing the standards is only half the story — NIST also provides transitio
 
 Knowing the standards is useful; knowing where *your* systems still use the quantum-vulnerable predecessors (RSA, ECDSA, ECDH) is what a questionnaire or auditor actually asks for.
 
-**[Run a free scan](/#scan)** and PQHorizon reports your public TLS and certificate posture with each finding mapped to the exact NIST standard that addresses it — turning "we should adopt FIPS 203" into "here's where we still need to." It's the bridge from reading the standards to acting on them.
+Start with the surface you can check in a minute: **[read your own TLS handshake](/tls-1-3-post-quantum/#check-your-own-connections)**. The negotiated key-exchange group tells you whether FIPS 203 (ML-KEM) is already protecting that connection — turning "we should adopt FIPS 203" into "here's where we still need to."
 
 ---
 

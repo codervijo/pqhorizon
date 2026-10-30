@@ -66,7 +66,7 @@ Note what *doesn't* fully help: rotating symmetric keys or using AES-256 protect
 
 Every day you run classical-only key exchange on long-retention data is a day of ciphertext an adversary can bank against a future decryption. You can't un-send what's already been harvested — but you can stop adding to the pile.
 
-**[Run a free scan](/#scan)** to see whether your public TLS still uses classical-only key exchange — the exact surface HNDL harvests. PQHorizon shows your negotiated key-exchange group and flags where recorded-today traffic is exposed, mapped to the fix. It's the fastest way to find your open HNDL surface and start closing it.
+**[Check your own TLS handshake](/tls-1-3-post-quantum/#check-your-own-connections)** to see whether your public endpoints still use classical-only key exchange — the exact surface HNDL harvests. One `openssl` command shows the negotiated key-exchange group; if it isn't a hybrid like `X25519MLKEM768`, recorded-today traffic on that endpoint is exposed.
 
 ---
 

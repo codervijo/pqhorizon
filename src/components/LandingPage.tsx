@@ -16,6 +16,10 @@ import {
   Info,
 } from "lucide-react";
 
+const SCAN_OFFLINE = "scan-offline";
+const LEAD_OFFLINE =
+  "Requests are temporarily unavailable — please try again later.";
+
 /* ---- Types (ported from genai/src/routes/api/scan.ts) ---- */
 
 export type Severity = "Critical" | "High" | "Medium" | "OK" | "Info";
@@ -239,14 +243,16 @@ function ScanSection() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ domain }),
       });
-      const data = await res.json();
-      if (!res.ok) {
-        setError(data.error ?? "Scan failed.");
-      } else {
+      // /api/scan has no backend since the Astro port (see src/lib/server-todo.md);
+      // it returns an empty 405, so a missing/unparseable body means "offline".
+      const data = await res.json().catch(() => null);
+      if (res.ok && data) {
         setResult(data as ScanResult);
+      } else {
+        setError(data?.error ?? SCAN_OFFLINE);
       }
-    } catch (err) {
-      setError((err as Error).message);
+    } catch {
+      setError(SCAN_OFFLINE);
     } finally {
       clearInterval(interval);
       setLoading(false);
@@ -324,7 +330,23 @@ function ScanSection() {
               <div className="flex items-center gap-2 font-medium text-sev-critical">
                 <AlertTriangle className="h-4 w-4" /> Scan failed
               </div>
-              <div className="mt-1 text-muted-foreground">{error}</div>
+              <div className="mt-1 text-muted-foreground">
+                {error === SCAN_OFFLINE ? (
+                  <>
+                    The live scanner is temporarily offline. You can run the same
+                    check yourself with one command —{" "}
+                    <a
+                      href="/tls-1-3-post-quantum/#check-your-own-connections"
+                      className="underline underline-offset-2 text-foreground"
+                    >
+                      how to read your own TLS handshake
+                    </a>
+                    .
+                  </>
+                ) : (
+                  error
+                )}
+              </div>
             </div>
           )}
           {result && !loading && <FindingsPanel result={result} />}
@@ -655,15 +677,16 @@ function LeadSection() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, company, timeline }),
       });
-      const data = await res.json();
-      if (!res.ok) {
-        setErr(data.error ?? "Submission failed.");
-        setState("err");
-      } else {
+      // /api/lead has no backend since the Astro port — empty 405 body.
+      const data = await res.json().catch(() => null);
+      if (res.ok && data) {
         setState("ok");
+      } else {
+        setErr(data?.error ?? LEAD_OFFLINE);
+        setState("err");
       }
-    } catch (e) {
-      setErr((e as Error).message);
+    } catch {
+      setErr(LEAD_OFFLINE);
       setState("err");
     }
   }

@@ -7,6 +7,8 @@ last_updated: 2026-07-04
 # PQHorizon Content Cluster — Batch 1
 
 Nine pages, one topical cluster, all routing to the free public-TLS scan (`/#scan`).
+
+> **v1.B (2026-10-30):** while `/api/scan` 405s, guide CTAs point to the manual handshake check (`/tls-1-3-post-quantum/#check-your-own-connections`) instead of `/#scan`. Restore the scan CTAs in v1.D.
 Strategy: rank on low keyword difficulty now, age into value as PQC search volume
 climbs toward the 2029/2030 deadlines. Every page targets the **mid-market security
 buyer** (50–500 employees, compliance forcing function, no in-house cryptographer) —

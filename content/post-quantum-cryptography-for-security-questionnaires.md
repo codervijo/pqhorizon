@@ -57,13 +57,13 @@ If you have these two documents, you can answer *any* PQC questionnaire item, be
 
 You can produce a defensible first artifact today. Start with your public-facing TLS and certificates — it's the slice a reviewer can independently verify (they may run the same check on you), so it's the highest-credibility place to begin.
 
-**[Get a defensible inventory before your deadline — run a free scan](/#scan).** PQHorizon inspects your public TLS and certificate posture, flags quantum-vulnerable algorithms and any harvest-now-decrypt-later exposure, and maps each finding to the relevant NIST standard. You get an export you can attach to the questionnaire response as evidence of the current-state assessment — turning an unanswerable line item into a documented, in-progress answer in minutes.
+**[Check your public TLS handshakes](/tls-1-3-post-quantum/#check-your-own-connections)** for every external domain and record the TLS version, negotiated key-exchange group, and certificate algorithm. Note which are classical-only (quantum-vulnerable) and which already use a hybrid like `X25519MLKEM768`. That table is a credible current-state assessment you can reference in the response — turning an unanswerable line item into a documented, in-progress answer.
 
 ## Turn the questionnaire into an advantage
 
 Handled well, a PQC questionnaire item is a chance to look *more* mature than competitors who wrote "N/A" or bluffed. A vendor that can produce a cryptographic inventory and a NIST-aligned roadmap on request signals exactly the operational discipline enterprise procurement is screening for.
 
-**[Run a free scan](/#scan)** to build the evidence, then use the answer template above. When you're ready to cover your full footprint — not just public TLS — the same engine produces the complete inventory and roadmap.
+Build the evidence from your public TLS first, then use the answer template above and extend the inventory to internal systems with the [migration checklist](/post-quantum-cryptography-migration-checklist/).
 
 ---
 

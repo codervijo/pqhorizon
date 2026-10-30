@@ -60,7 +60,7 @@ If you run security or IT, the purpose of post-quantum cryptography translates i
 
 You don't have to become a cryptographer to begin. The first useful step is simply seeing your current posture.
 
-**[Run a free scan of your domain](/#scan)** to see whether your public TLS is already quantum-exposed and where your migration starts. It's an honest check, no signup — and the first concrete step from "I understand the purpose" to "I know my exposure." From there, the [post-quantum readiness self-check](/post-quantum-readiness/) walks you through the rest.
+**[Check your own TLS handshake](/tls-1-3-post-quantum/#check-your-own-connections)** to see whether your public TLS is already quantum-exposed and where your migration starts. It's one command — and the first concrete step from "I understand the purpose" to "I know my exposure." From there, the [post-quantum readiness self-check](/post-quantum-readiness/) walks you through the rest.
 
 ---
 

@@ -16,7 +16,7 @@ evergreen: true
 
 # TLS 1.3 Post-Quantum Key Exchange, Explained
 
-If you want to know exactly how post-quantum cryptography plugs into TLS 1.3 — what `X25519MLKEM768` means, why it's a *hybrid*, and how to check whether your own connections use it — this page is the concrete version. No hand-waving; real codepoints and real commands. This is also precisely what our [free scan](/#scan) inspects, so you can read the mechanics here and then see them on your own domain.
+If you want to know exactly how post-quantum cryptography plugs into TLS 1.3 — what `X25519MLKEM768` means, why it's a *hybrid*, and how to check whether your own connections use it — this page is the concrete version. No hand-waving; real codepoints and real commands.
 
 ## What "post-quantum TLS" actually changes
 
@@ -60,8 +60,6 @@ The `Server Temp Key` line reports the negotiated group. `X25519MLKEM768` means 
 
 In a browser, open a site's connection security details / DevTools security panel and look at the key-exchange group on the TLS 1.3 connection.
 
-**This handshake inspection is the core of PQHorizon's free scan.** [Run it against your domain](/#scan) and it decodes the TLS version, cipher, certificate signature algorithm, public-key algorithm, and the negotiated group — then tells you, in plain terms, whether the connection is quantum-exposed and which NIST standard the fix maps to. It's the fastest honest answer to "is my TLS post-quantum?"
-
 ## How to enable it on your endpoints
 
 - **CDN / edge in front of your site.** The fastest lever. Cloudflare, for example, negotiates hybrid post-quantum key exchange for eligible client connections; check your CDN's post-quantum setting. If your traffic terminates TLS at the edge, enabling it there covers your public surface immediately.
@@ -73,7 +71,7 @@ In a browser, open a site's connection security details / DevTools security pane
 
 Hybrid key exchange is the *first* and easiest phase of a post-quantum migration — it protects data in transit against harvest-now-decrypt-later with minimal disruption. Certificate/signature migration (ML-DSA, FIPS 204) and long-retention data-at-rest come later. See the full sequence in the [migration checklist](/post-quantum-cryptography-migration-checklist/) and how NIST frames the standards in [NIST post-quantum standards](/nist-post-quantum-cryptography-standards/).
 
-**[Run a free scan](/#scan)** to see your domain's exact key-exchange group and certificate posture right now — then use it as the first entry in your inventory.
+**[Run the handshake check](#check-your-own-connections)** against each of your public domains and record the negotiated group and certificate algorithm — that's the first entry in your inventory.
 
 ---
 

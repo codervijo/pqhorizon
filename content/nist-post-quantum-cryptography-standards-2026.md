@@ -52,7 +52,7 @@ Beyond the paperwork, post-quantum key exchange is live in production today: maj
 
 The 2026 status doesn't change the playbook, it sharpens the urgency: the standards are final, the tooling is shipping, and the clock to 2030 is running. Inventory first, migrate key establishment first via hybrids, then signatures — the sequence in the [NIST migration guidance](/nist-post-quantum-cryptography-migration-guidance/).
 
-**[Run a free scan](/#scan)** to see where your public TLS and certificates stand against the 2026 baseline — each finding mapped to the NIST standard that addresses it. It's the fastest way to know whether you're keeping pace or falling behind the deployed state of the art.
+**[Check your own TLS handshake](/tls-1-3-post-quantum/#check-your-own-connections)** to see where your public endpoints stand against the 2026 baseline: if browsers negotiate `X25519MLKEM768` with you, you're keeping pace; if you see bare `X25519` or `P-256`, you're behind the deployed state of the art.
 
 ---
 

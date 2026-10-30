@@ -62,7 +62,7 @@ That package is what turns "are you post-quantum ready?" from an unanswerable qu
 
 Since the entire guidance rests on inventory, and inventory is where teams stall, start with the highest-signal slice: your public-facing TLS and certificates. It's internet-visible, it maps directly to the NIST standards, and it's the first thing a customer's security team will check themselves.
 
-**[Run a free scan](/#scan)** to generate that slice automatically — your TLS and certificate posture, each finding tied to the NIST standard it maps to. It's step one of the NIST-prescribed sequence, done in under a minute, and a defensible foundation for the rest of your plan.
+**[Check your public TLS handshakes](/tls-1-3-post-quantum/#check-your-own-connections)** to build that slice — the negotiated key-exchange group and certificate algorithm for each domain. It's step one of the NIST-prescribed sequence and a defensible foundation for the rest of your plan.
 
 ---
 

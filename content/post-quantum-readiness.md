@@ -48,7 +48,7 @@ openssl s_client -connect example.com:443 -tls1_3 </dev/null 2>/dev/null | grep 
 
 The `Server Temp Key` line shows the negotiated key-exchange group. If it reads `X25519` or `P-256`, there is no post-quantum protection on that connection. If it reads something like `X25519MLKEM768`, the connection is using a **hybrid post-quantum key exchange** — classical X25519 combined with ML-KEM-768, the NIST-standardized lattice KEM. That hybrid is exactly what modern browsers now negotiate by default. (We explain the mechanics on [TLS 1.3 and post-quantum key exchange](/tls-1-3-post-quantum/).)
 
-This one line is also the core of our free scan. **[Run a free scan](/#scan)** and PQHorizon does this check against your domain, decodes the certificate and negotiated group, and maps each finding to the relevant NIST guidance — no install, no signup.
+Run it against each public domain you own and record the result — that list is the first page of your cryptographic inventory.
 
 ## What "ready" actually requires
 
@@ -73,9 +73,9 @@ Three forcing functions, none of which wait for the CRQC:
 
 You don't start by rewriting cryptography. You start by producing an inventory you can hand to an auditor. That single artifact — "here is where we use public-key crypto, here's what's vulnerable, here's our prioritized plan" — is what converts a panic-inducing questionnaire item into a five-minute answer.
 
-PQHorizon's free scan gives you the first slice of that inventory: your public-facing TLS and certificate posture, findings ranked by severity, each tied to the NIST standard it maps to. It's an honest public-TLS check, not a sales gate.
+The first slice of that inventory is the one you can verify from outside: your public-facing TLS and certificate posture.
 
-**[Run a free scan of your domain](/#scan)** and get the first page of your cryptographic inventory in under a minute. When you're ready to go deeper, the same engine covers your full footprint and produces the roadmap.
+**[Read your own TLS handshake](#how-to-read-your-own-tls-handshake)** for every public domain and record the results — that's the first page of your cryptographic inventory. Then work outward with the [migration checklist](/post-quantum-cryptography-migration-checklist/).
 
 ---
 
