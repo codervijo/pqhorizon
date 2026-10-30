@@ -20,7 +20,7 @@ framework = "astro"
 
 # Tracked todos for pqhorizon.com. status: "done" | "open".
 [[todo]]
-status = "open"
+status = "done"
 priority = "medium"
 task = "Check SEO: GSC indexation + coverage (revisit ~2026-07-14)"
 
@@ -30,9 +30,39 @@ priority = "medium"
 task = "Verify GA4 is receiving data (check Realtime after first traffic)"
 
 [[todo]]
-status = "open"
+status = "done"
 priority = "low"
 task = "Confirm GSC verification + sitemap submitted (re-run deploy if it timed out)"
+
+[[todo]]
+status = "open"
+priority = "high"
+task = "Supply GA4 measurement ID; hardcode it in index.astro / [...slug].astro / Layout.astro (replaces PUBLIC_GA_ID env gate — CHECK_148/149 need a literal G-…). Blocks push."
+
+[[todo]]
+status = "open"
+priority = "high"
+task = "Decide: source or cut the unsourced 'PQC dates showing up in RFPs / questionnaires / cyber-insurance renewals' claim in content/post-quantum-readiness.md. Blocks push."
+
+[[todo]]
+status = "open"
+priority = "medium"
+task = "After v1.B/v1.C deploy: `portfolio project fix pqhorizon.com --rule CHECK_154 --apply` (IndexNow) + GSC URL Inspection → Request indexing for /ml-kem-vs-ml-dsa/, /post-quantum-cryptography-for-security-questionnaires/, /harvest-now-decrypt-later/"
+
+[[todo]]
+status = "open"
+priority = "low"
+task = "After deploy: browser-test homepage scan + lead forms show the 'temporarily unavailable' messages (not a raw JSON error)"
+
+[[todo]]
+status = "open"
+priority = "low"
+task = "Re-check TLS page examples naming cloudflare.com / github.com (dated 2026-10-30) — stale once GitHub enables hybrid key exchange"
+
+[[todo]]
+status = "open"
+priority = "medium"
+task = "Review growth.md v1.B + v1.C entries (2026-11-27): indexed count, ml-kem vs ml-dsa impressions, 28d totals"
 
 [content]
 # Declarative content identity for this site.
