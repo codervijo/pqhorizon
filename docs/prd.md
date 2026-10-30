@@ -1,10 +1,10 @@
 ---
 project: pqhorizon.com
 prd_version: 1
-project_version: v1.A.3
+project_version: v1.B
 status: planned
 owner: Vijo
-last_updated: 2026-09-22
+last_updated: 2026-10-30
 ---
 
 # pqhorizon.com — PRD
@@ -45,9 +45,10 @@ Two-level versioning convention (canonical: `sites/portfolio/AI_AGENTS.md`):
 | **v0.A** | scaffolded | `portfolio new bootstrap` ran; standard files written; git initialized | ✅ |
 | **v1.A** | PQC SEO content cluster (batch 1) | 9 Markdown guides in `content/` rendered as static crawlable pages (`[...slug].astro`), Article + Breadcrumb JSON-LD, footer guide nav | ✅ |
 | **v1.A.1** | sitemap lastmod | per-page `<lastmod>` from content frontmatter | ✅ |
-| **v1.A.2** | CNSA 2.0 deadline fix | removed false "2029 CNSA 2.0" claim; hero stat → 2027 NSS acquisition gate; meta descriptions updated | ✅ (not yet deployed) |
-| **v1.A.3** | content source fill | all `[SOURCE]`/`[VERIFY]` markers replaced with primary-source facts + links | ✅ (not yet deployed) |
-| **v1.B** | re-home scan + lead backends | (1) `POST /api/scan` — live TLS handshake, X.509 chain parse, PQ-hybrid group check, `ScanResult` for the free-scan UI (runtime TBD: needs raw TLS introspection, which a static deploy can't do); (2) `POST /api/lead` — lead capture (email / company / timeline) to a form backend + datastore. Both currently 405 on live since the Astro port; see `src/lib/server-todo.md` | planned |
+| **v1.A.2** | CNSA 2.0 deadline fix | removed false "2029 CNSA 2.0" claim; hero stat → 2027 NSS acquisition gate; meta descriptions updated | ✅ |
+| **v1.A.3** | content source fill | all `[SOURCE]`/`[VERIFY]` markers replaced with primary-source facts + links | ✅ |
+| **v1.B** | SEO hygiene | `<meta robots>` on every page; `og:image` + `twitter:image` (`public/og-image.png`, 1200×630); GA4 tag gated on `PUBLIC_GA_ID` env var; `tsconfig.json`; IndexNow ping + GSC reindex request for the 3 non-indexed URLs | in progress |
+| **v1.C** | re-home scan + lead backends | (1) `POST /api/scan` — live TLS handshake, X.509 chain parse, PQ-hybrid group check, `ScanResult` for the free-scan UI (runtime TBD: needs raw TLS introspection, which a static deploy can't do); (2) `POST /api/lead` — lead capture (email / company / timeline) to a form backend + datastore. Both currently 405 on live since the Astro port; see `src/lib/server-todo.md` | planned |
 
 ## 6. Open questions
 

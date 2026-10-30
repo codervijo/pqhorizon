@@ -23,6 +23,8 @@ const d = entry.data;
 const site = "https://pqhorizon.com";
 const canonical = `${site}/${d.slug}/`;
 const title = `${d.title} — PQHorizon`;
+const ogImage = `${site}/og-image.png`;
+const GA_ID = import.meta.env.PUBLIC_GA_ID;
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -62,7 +64,7 @@ const jsonLd = {
     <meta name="theme-color" content="#0d1418" />
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    {!d.evergreen && <meta name="robots" content="index, follow" />}
+    <meta name="robots" content="index, follow" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="article" />
@@ -70,11 +72,15 @@ const jsonLd = {
     <meta property="og:description" content={d.description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:site_name" content="PQHorizon" />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
 
     <!-- Twitter card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={d.title} />
     <meta name="twitter:description" content={d.description} />
+    <meta name="twitter:image" content={ogImage} />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -85,6 +91,19 @@ const jsonLd = {
     />
 
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+    <!-- GA4 — injected only when PUBLIC_GA_ID is set (Cloudflare env var, inlined at build). -->
+    {GA_ID && (
+      <>
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} />
+        <script is:inline define:vars={{ GA_ID }}>
+          window.dataLayer = window.dataLayer || [];
+          function gtag() { dataLayer.push(arguments); }
+          gtag('js', new Date());
+          gtag('config', GA_ID);
+        </script>
+      </>
+    )}
   </head>
   <body>
     <div class="page">

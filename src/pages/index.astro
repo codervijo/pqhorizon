@@ -15,6 +15,8 @@ const description =
 // 'always' in astro.config.mjs). A no-slash canonical 308-redirects and breaks
 // indexing (CHECK_161).
 const canonical = `${site}/`;
+const ogImage = `${site}/og-image.png`;
+const GA_ID = import.meta.env.PUBLIC_GA_ID;
 ---
 <!doctype html>
 <html lang="en">
@@ -26,6 +28,7 @@ const canonical = `${site}/`;
     <meta name="theme-color" content="#0d1418" />
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="robots" content="index, follow" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
@@ -33,11 +36,15 @@ const canonical = `${site}/`;
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:site_name" content="PQHorizon" />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
 
     <!-- Twitter card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
 
     <!-- Fonts (ported from genai/src/routes/__root.tsx) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -66,6 +73,19 @@ const canonical = `${site}/`;
         }
       ]
     })} />
+
+    <!-- GA4 — injected only when PUBLIC_GA_ID is set (Cloudflare env var, inlined at build). -->
+    {GA_ID && (
+      <>
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} />
+        <script is:inline define:vars={{ GA_ID }}>
+          window.dataLayer = window.dataLayer || [];
+          function gtag() { dataLayer.push(arguments); }
+          gtag('js', new Date());
+          gtag('config', GA_ID);
+        </script>
+      </>
+    )}
   </head>
   <body>
     <LandingPage client:load />

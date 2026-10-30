@@ -64,3 +64,12 @@ https://search.google.com/search-console directly.
 - **Action:** project scaffolded via `portfolio new bootstrap`; first deploy pending. After deploy: verify in GSC as `sc-domain:pqhorizon.com` and submit the sitemap.
 - **Result:** TBD — review 2026-07-28
 - **Learning:** TBD
+
+## 2026-10-30 — Review of 2026-06-30 launch entry + SEO hygiene pass (v1.B)
+- **Status:** active
+- **Hypothesis:** The two crawled-not-indexed guides were last crawled ~3mo ago, before the v1.A.3 content update (2026-09-22); a fresh crawl of the current content, plus complete head tags, gets them indexed. Not thin: both are 840–940 words with 5–7 internal inbound links each.
+- **KPI:** indexed URLs (GSC coverage, top 10 inspected); impressions / clicks (28d)
+- **Baseline:** 28 impressions · 0 clicks · avg position ~37 (28d) · 7/10 indexed (`/harvest-now-decrypt-later/` unknown to Google; `/nist-post-quantum-cryptography-standards/` and `/post-quantum-cryptography-for-security-questionnaires/` crawled-not-indexed). Review of the 2026-06-30 entry: site live and indexed, earning impressions but no clicks yet.
+- **Action:** v1.B — added `<meta robots>`, `og:image`/`twitter:image`, GA4 (gated on `PUBLIC_GA_ID`), tsconfig; IndexNow ping and GSC "Request indexing" for the 3 non-indexed URLs after deploy.
+- **Result:** TBD — review 2026-11-27
+- **Learning:** TBD

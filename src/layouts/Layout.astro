@@ -17,6 +17,8 @@ const {
   description = "See what breaks before your auditor asks. Free post-quantum TLS preview and full cryptographic inventory for teams facing PQ migration deadlines.",
   canonical = `${site}/`,
 } = Astro.props;
+const ogImage = `${site}/og-image.png`;
+const GA_ID = import.meta.env.PUBLIC_GA_ID;
 ---
 
 <!doctype html>
@@ -36,11 +38,15 @@ const {
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:site_name" content="PQHorizon" />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
 
     <!-- Twitter card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
 
     <!-- Fonts (ported from __root.tsx) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -49,6 +55,19 @@ const {
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
     />
+
+    <!-- GA4 — injected only when PUBLIC_GA_ID is set (Cloudflare env var, inlined at build). -->
+    {GA_ID && (
+      <>
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} />
+        <script is:inline define:vars={{ GA_ID }}>
+          window.dataLayer = window.dataLayer || [];
+          function gtag() { dataLayer.push(arguments); }
+          gtag('js', new Date());
+          gtag('config', GA_ID);
+        </script>
+      </>
+    )}
   </head>
   <body>
     <slot />
