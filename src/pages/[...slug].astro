@@ -22,7 +22,9 @@ const d = entry.data;
 
 const site = "https://pqhorizon.com";
 const canonical = `${site}/${d.slug}/`;
-const title = `${d.title} — PQHorizon`;
+// Brand suffix only when the result stays within ~60 chars (SERP truncation).
+const title =
+  d.title.length + " — PQHorizon".length <= 60 ? `${d.title} — PQHorizon` : d.title;
 const ogImage = `${site}/og-image.png`;
 const GA_ID = import.meta.env.PUBLIC_GA_ID;
 
@@ -50,6 +52,19 @@ const jsonLd = {
         { "@type": "ListItem", position: 2, name: d.title, item: canonical },
       ],
     },
+    ...(d.faq.length
+      ? [
+          {
+            "@type": "FAQPage",
+            "@id": `${canonical}#faq`,
+            mainEntity: d.faq.map(({ q, a }) => ({
+              "@type": "Question",
+              name: q,
+              acceptedAnswer: { "@type": "Answer", text: a },
+            })),
+          },
+        ]
+      : []),
   ],
 };
 ---
@@ -120,6 +135,17 @@ const jsonLd = {
 
         <article class="prose">
           <Content />
+          {d.faq.length > 0 && (
+            <section class="faq" aria-labelledby="faq">
+              <h2 id="faq">Frequently asked questions</h2>
+              {d.faq.map(({ q, a }) => (
+                <>
+                  <h3>{q}</h3>
+                  <p>{a}</p>
+                </>
+              ))}
+            </section>
+          )}
         </article>
 
         <aside class="endcta">

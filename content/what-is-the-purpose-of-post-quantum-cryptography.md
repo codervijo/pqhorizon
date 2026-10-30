@@ -1,5 +1,5 @@
 ---
-title: "What Is the Purpose of Post-Quantum Cryptography?"
+title: "Why Post-Quantum Cryptography Exists, in Plain Terms"
 slug: what-is-the-purpose-of-post-quantum-cryptography
 description: "A plain-language explanation of what post-quantum cryptography is for, what it replaces (RSA, ECC), and why it matters before quantum computers arrive."
 target_keyword: what is the purpose of post-quantum cryptography
@@ -7,10 +7,23 @@ secondary_keywords:
   - why post-quantum cryptography
   - post-quantum cryptography explained
   - quantum threat to encryption
+  - is aes 256 quantum safe
+  - is rsa quantum safe
 search_intent: "Top-of-funnel reader wants a clear, non-hype explanation of why post-quantum cryptography exists and what problem it solves."
-word_count: 820
-last_updated: 2026-09-22
+word_count: 1150
+last_updated: 2026-10-30
 evergreen: true
+faq:
+  - q: "Is AES-256 quantum safe?"
+    a: "NIST's guidance is that current applications can continue to use AES with 128-, 192- or 256-bit keys, because Grover's algorithm is likely to give little or no practical advantage against AES. The quantum risk is in the public-key exchange that delivers the AES key, not in AES itself."
+  - q: "Is RSA quantum safe?"
+    a: "No. A large quantum computer running Shor's algorithm breaks RSA, and larger keys such as RSA-4096 do not change that outcome. NIST's transition plan deprecates RSA at every approved key size after 2030 and disallows it after 2035."
+  - q: "Does post-quantum cryptography exist yet?"
+    a: "Yes. NIST published the first three post-quantum standards — ML-KEM, ML-DSA and SLH-DSA — on August 13, 2024, and they run on ordinary computers. OpenSSL 3.5 and Chrome already support them."
+  - q: "Why is it called post-quantum cryptography?"
+    a: "Because it is designed to stay secure after large quantum computers exist. It is not quantum cryptography: it uses ordinary math on ordinary hardware, just math problems that quantum computers are not known to solve efficiently."
+  - q: "Do I need post-quantum encryption?"
+    a: "If you hold data that must stay confidential for years, or you sell to organizations bound by federal or NIST timelines, yes — and the work starts with an inventory of where you use RSA and elliptic-curve cryptography. If your data loses its value within days and no customer asks, the urgency is lower, but the 2030 deprecation still applies to the systems you run."
 ---
 
 # What Is the Purpose of Post-Quantum Cryptography?
@@ -32,7 +45,7 @@ The security of RSA and ECC rests on math problems that are effectively impossib
 A useful distinction, because "quantum breaks encryption" is only half true:
 
 - **Public-key crypto — broken.** RSA, ECDSA, ECDH, Diffie-Hellman. This is what PQC replaces.
-- **Symmetric crypto — mostly fine.** AES and hash functions (SHA-2, SHA-3) are only modestly weakened (by Grover's algorithm) and stay secure with adequate key sizes — AES-256 is considered safe. You don't replace these; you just make sure key sizes are large enough.
+- **Symmetric crypto — mostly fine.** AES and hash functions (SHA-2, SHA-3) are only modestly weakened (by Grover's algorithm) and stay secure with adequate key sizes — NIST's [post-quantum FAQ](https://csrc.nist.gov/projects/post-quantum-cryptography/faqs) says current applications can continue to use AES with 128-, 192-, or 256-bit keys. You don't replace these.
 
 So the purpose of PQC is narrow and specific: shore up the *public-key* layer — the part that establishes keys and proves identity.
 
@@ -42,7 +55,7 @@ The natural objection is: "If the machine doesn't exist yet, why act?" Three rea
 
 - **Harvest now, decrypt later.** An adversary can record your encrypted data *today* and simply store it until a quantum computer can decrypt it. Anything that must stay confidential for years — health records, financial data, legal files, trade secrets — is effectively exposed the moment it crosses the wire, even though the decryption happens later. That's the sharpest reason to act early, and we cover it in depth in [harvest now, decrypt later](/harvest-now-decrypt-later/).
 - **Migration is slow.** Replacing cryptography across certificates, protocols, code-signing, and hardware takes years for a real organization. You have to start well before the threat lands.
-- **The standards and deadlines already exist.** In August 2024, NIST [published the first finished post-quantum standards](https://www.nist.gov/news-events/news/2024/08/nist-releases-first-3-finalized-post-quantum-encryption-standards) (FIPS 203, 204, and 205), so the replacement algorithms are ready. And forcing dates are appearing in the real world — Google has [set 2029 as its timeline](https://blog.google/innovation-and-ai/technology/safety-security/cryptography-migration-timeline/) for post-quantum cryptography migration, and PQC line items are showing up in RFPs and security questionnaires now.
+- **The standards and deadlines already exist.** In August 2024, NIST [published the first finished post-quantum standards](https://www.nist.gov/news-events/news/2024/08/nist-releases-first-3-finalized-post-quantum-encryption-standards) (FIPS 203, 204, and 205), so the replacement algorithms are ready. And the deadlines are now final: NIST's transition plan, [IR 8547](https://csrc.nist.gov/pubs/ir/8547/final) (October 2026), deprecates quantum-vulnerable public-key algorithms after 2030 and disallows them after 2035. Google has separately [set 2029 as its own timeline](https://blog.google/innovation-and-ai/technology/safety-security/cryptography-migration-timeline/) for post-quantum migration.
 
 ## The tools of post-quantum cryptography
 
@@ -52,7 +65,15 @@ NIST standardized the first PQC algorithms as Federal Information Processing Sta
 - **ML-DSA (FIPS 204)** — digital signatures. Replaces ECDSA/RSA signatures. Based on CRYSTALS-Dilithium.
 - **SLH-DSA (FIPS 205)** — a hash-based signature alternative with very conservative security assumptions, based on SPHINCS+.
 
-You'll find these explained for non-cryptographers in [NIST post-quantum standards](/nist-post-quantum-cryptography-standards/). In practice the first place most organizations meet them is TLS: modern browsers now negotiate a hybrid ML-KEM key exchange by default (see [TLS 1.3 post-quantum](/tls-1-3-post-quantum/)).
+How the first two differ — and why you need both — is covered in [ML-KEM vs ML-DSA](/ml-kem-vs-ml-dsa/). In practice the first place most organizations meet them is TLS: Chrome has offered a hybrid ML-KEM key exchange since [Chrome 131](https://security.googleblog.com/2024/09/a-new-path-for-kyber-on-web.html) (see [TLS 1.3 post-quantum](/tls-1-3-post-quantum/)).
+
+## Worked examples
+
+**1. Failure case — "our VPN uses AES-256, so we're quantum-safe."** The tunnel encrypts traffic with AES-256, which NIST says remains fine. But the AES key was agreed using a classical elliptic-curve Diffie-Hellman exchange at the start of the session. An adversary who recorded that session can later use a quantum computer to break the key exchange, recover the AES key, and decrypt everything. **Conclusion:** the strength of the bulk cipher doesn't help if the key exchange that delivered it is classical. The post-quantum fix has to reach the key exchange.
+
+**2. Sorting one web connection into "replace" and "keep."** Take a typical HTTPS connection: X25519 key exchange, an ECDSA P-256 certificate, AES-256-GCM for the data, SHA-256 inside the signatures. X25519 → replace (with hybrid ML-KEM). ECDSA → replace (with ML-DSA, later). AES-256-GCM → keep. SHA-256 → keep. **Conclusion:** post-quantum migration touches two of the four pieces — the public-key ones — which is why it's a targeted project rather than a rewrite of all your encryption.
+
+**3. Why the timing matters even though the machine isn't here.** Suppose a record you send today must stay confidential for ten years, and your migration will take three. If a quantum computer capable of breaking your key exchange arrives any time in the next decade, that record is exposed, and anything you send during the three migration years adds to the pile. **Conclusion:** the question isn't "when will the computer exist?" but "how long must my data stay secret, and how long will my migration take?" — the reasoning behind [harvest now, decrypt later](/harvest-now-decrypt-later/).
 
 ## What this means for you
 
@@ -64,4 +85,4 @@ You don't have to become a cryptographer to begin. The first useful step is simp
 
 ---
 
-*Related: [NIST post-quantum standards](/nist-post-quantum-cryptography-standards/) · [Harvest now, decrypt later](/harvest-now-decrypt-later/) · [Post-quantum readiness self-check](/post-quantum-readiness/)*
+*Related: [The NIST algorithms compared](/ml-kem-vs-ml-dsa/) · [Harvest now, decrypt later](/harvest-now-decrypt-later/) · [Post-quantum readiness self-check](/post-quantum-readiness/)*

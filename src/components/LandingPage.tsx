@@ -821,7 +821,7 @@ function Footer() {
             ["/post-quantum-cryptography-migration-checklist/", "PQC migration checklist"],
             ["/tls-1-3-post-quantum/", "TLS 1.3 post-quantum key exchange"],
             ["/what-is-the-purpose-of-post-quantum-cryptography/", "What is post-quantum cryptography for?"],
-            ["/nist-post-quantum-cryptography-standards/", "NIST PQC standards (FIPS 203/204/205)"],
+            ["/ml-kem-vs-ml-dsa/", "ML-KEM vs ML-DSA (FIPS 203/204/205)"],
             ["/nist-post-quantum-cryptography-migration-guidance/", "NIST migration guidance"],
             ["/harvest-now-decrypt-later/", "Harvest now, decrypt later"],
             ["/post-quantum-cryptography-for-security-questionnaires/", "PQC on security questionnaires & RFPs"],

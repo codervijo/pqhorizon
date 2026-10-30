@@ -26,7 +26,7 @@ is the closest thing to a definitional pillar page in this batch.
 | 2 | `post-quantum-cryptography-migration-checklist` | post-quantum cryptography migration checklist | [VERIFY] | Actionable NIST-aligned checklist | Priority | ✅ |
 | 3 | `tls-1-3-post-quantum` | tls 1.3 post quantum | [VERIFY] | How PQ key exchange works / check mine | Priority | ✅ |
 | 4 | `what-is-the-purpose-of-post-quantum-cryptography` | what is the purpose of post-quantum cryptography | 12 | Top-of-funnel definitional | Priority | ✅ |
-| 5 | `nist-post-quantum-cryptography-standards` | nist post-quantum cryptography standards | [VERIFY] | What are FIPS 203/204/205 | Evergreen | ✅ |
+| 5 | `ml-kem-vs-ml-dsa` (was `nist-post-quantum-cryptography-standards`, retargeted v1.C — crawled-not-indexed; overlapped page 9) | ml-kem vs ml-dsa | [VERIFY] | FIPS 203 vs 204 vs 205 comparison | Evergreen | ✅ |
 | 6 | `nist-post-quantum-cryptography-migration-guidance` | nist post-quantum cryptography migration guidance | [VERIFY] | What NIST requires of me | Evergreen | ✅ |
 | 7 | `harvest-now-decrypt-later` | harvest now decrypt later | [VERIFY] | Which of my data is at risk today | Evergreen | ✅ |
 | 8 | `post-quantum-cryptography-for-security-questionnaires` | post-quantum cryptography for security questionnaires | [VERIFY] | Answer a PQC RFP/questionnaire item | Evergreen | ✅ |

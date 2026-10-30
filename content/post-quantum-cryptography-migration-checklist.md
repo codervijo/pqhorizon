@@ -9,14 +9,25 @@ secondary_keywords:
   - quantum-safe migration plan
   - crypto-agility checklist
 search_intent: "Practitioner wants an actionable, ordered checklist to plan and execute a migration to post-quantum cryptography, aligned to NIST."
-word_count: 1060
-last_updated: 2026-07-04
+word_count: 1500
+last_updated: 2026-10-30
 evergreen: true
+faq:
+  - q: "What is a cryptographic inventory?"
+    a: "It is a list of every place your organization uses public-key cryptography, recording for each one the algorithm and key size, where it runs, what data it protects and for how long that data must stay secret. In a post-quantum migration it is the work queue: every row tagged quantum-vulnerable is a migration task."
+  - q: "What is the PQC migration timeline?"
+    a: "NIST IR 8547 (final, October 2026) deprecates quantum-vulnerable public-key algorithms such as RSA and ECDSA after 2030 and disallows them after 2035. Federal high value assets and high-impact systems must use post-quantum key establishment by December 31, 2030 and post-quantum signatures by December 31, 2031. For most private companies the effective deadline is whichever customer audit or contract adopts those dates first."
+  - q: "What are the biggest PQC migration challenges?"
+    a: "Hardware and trust infrastructure with long replacement cycles, larger keys and handshakes that break size assumptions in protocols and middleboxes, and cryptography nobody knows is there because it was never inventoried. NIST IR 8547 singles out PKI-based credentials such as smart cards and readers as needing an early start because of multi-year issuance cycles."
+  - q: "Do I need to replace AES in a post-quantum migration?"
+    a: "Generally no. Inventory it, but leave AES-128, AES-192 and AES-256 in place: NIST IR 8547 states it does not expect to transition away from its symmetric standards as part of the PQC migration. Only the handful of 112-bit symmetric standards need replacing, because NIST disallows them in 2030."
+  - q: "What is the NCCoE Migration to Post-Quantum Cryptography project?"
+    a: "It is a NIST National Cybersecurity Center of Excellence project, run with industry collaborators, that produces the SP 1800-38 practice guides. Those guides cover discovering where quantum-vulnerable cryptography is used and how to test and interoperate with post-quantum replacements, and they are useful as a model for your own inventory tooling."
 ---
 
 # Post-Quantum Cryptography Migration Checklist
 
-If you've decided to start migrating to post-quantum cryptography and you want an ordered list of what to actually do — not another explainer on Shor's algorithm — this is that list. It's aligned to NIST's migration model and the [FIPS 203/204/205 standards](/nist-post-quantum-cryptography-standards/), and it's written for a security or IT lead running the project without a dedicated cryptographer.
+If you've decided to start migrating to post-quantum cryptography and you want an ordered list of what to actually do — not another explainer on Shor's algorithm — this is that list. It's aligned to NIST's migration model and the [FIPS 203/204/205 standards (ML-KEM vs ML-DSA vs SLH-DSA)](/ml-kem-vs-ml-dsa/), and it's written for a security or IT lead running the project without a dedicated cryptographer.
 
 Migration is not a rip-and-replace. It's a phased program: **inventory → prioritize → build crypto-agility → deploy hybrids → validate → monitor.** Skipping the inventory is the single most common failure, because you can't migrate cryptography you don't know you have. Work the phases in order; within a phase, parallelize freely.
 
@@ -36,8 +47,8 @@ This is the load-bearing phase. The deliverable is a single document an auditor 
 - [ ] **Key exchange in transit.** VPN, SSH, service-to-service mTLS, database connections, message queues.
 - [ ] **Data at rest.** Backups, archives, object storage, databases. For each, record the key-wrapping/key-establishment algorithm and — critically — the required confidentiality lifetime.
 - [ ] **Code signing / firmware / secure boot.** Any signature that establishes software authenticity.
-- [ ] **Cryptographic libraries and versions.** OpenSSL, BoringSSL, libraries in your application dependencies. Note which support post-quantum algorithms and which don't.
-- [ ] **Hardware roots of trust.** HSMs, TPMs, smartcards — these often have the longest replacement lead time.
+- [ ] **Cryptographic libraries and versions.** OpenSSL, BoringSSL, libraries in your application dependencies. Note which support post-quantum algorithms and which don't — for OpenSSL, [3.5.0](https://github.com/openssl/openssl/blob/openssl-3.5/NEWS.md) is the first release with ML-KEM, ML-DSA and SLH-DSA.
+- [ ] **Hardware roots of trust.** HSMs, TPMs, smartcards — these often have the longest replacement lead time. [NIST IR 8547](https://csrc.nist.gov/pubs/ir/8547/final) specifically flags smart-card-based credentials as needing an early start because of multi-year issuance and replacement cycles.
 
 Tag every entry as **quantum-vulnerable** (RSA, ECDSA, ECDH, DH, DSA) or **quantum-safe / not-applicable** (AES-256, SHA-256/384, HMAC). This tagging alone turns the inventory into a work queue.
 
@@ -64,8 +75,9 @@ You're going to change algorithms more than once (hybrids now, pure PQC later, a
 
 Hybrids give you post-quantum protection *without* betting everything on a young algorithm — the session is secure unless *both* the classical and the post-quantum part are broken.
 
-- [ ] Enable **hybrid TLS 1.3 key exchange** on public endpoints: `X25519MLKEM768` (IANA codepoint `0x11EC`), or `P256MLKEM768` (`0x11EB`) where a FIPS-validated classical component is required. See [TLS 1.3 post-quantum](/tls-1-3-post-quantum/) for the mechanics.
-- [ ] Verify negotiation end-to-end after enabling — middleboxes and old clients sometimes break on the larger `ClientHello`.
+- [ ] Enable **hybrid TLS 1.3 key exchange** on public endpoints: `X25519MLKEM768` (IANA codepoint `0x11EC`), or `SecP256r1MLKEM768` (`0x11EB`) where the FIPS-validated component must be P-256 ECDHE ([RFC 10024](https://www.rfc-editor.org/rfc/rfc10024)). See [TLS 1.3 post-quantum](/tls-1-3-post-quantum/) for the mechanics.
+- [ ] Verify negotiation end-to-end after enabling — the hybrid key share makes the `ClientHello` large enough that it's [typically split across two packets](https://developers.cloudflare.com/ssl/post-quantum-cryptography/pqc-to-origin/), which some middleboxes mishandle.
+- [ ] Check every TLS hop, not just the public one: CDN-to-origin, load-balancer-to-service, and service-to-database connections each negotiate their own key exchange.
 - [ ] Roll out to internal TLS and VPN where supported.
 - [ ] For data at rest, begin re-wrapping long-retention data keys with ML-KEM-based key establishment.
 
@@ -79,10 +91,24 @@ Signatures are slower to migrate than key exchange because they touch PKI hierar
 
 ## Phase 6 — Validate and monitor
 
-- [ ] Re-scan public endpoints and confirm the negotiated groups changed as intended.
+- [ ] Re-run the [handshake check](/tls-1-3-post-quantum/#check-your-own-connections) from an OpenSSL 3.5+ client and confirm the negotiated groups changed as intended. An older client can't offer ML-KEM, so it reports classical key exchange even against a migrated server.
 - [ ] Update the inventory to reflect migrated items — it's a living document.
 - [ ] Set up drift monitoring: reissued certificates, new services, and infra changes can silently reintroduce classical-only crypto.
 - [ ] Keep the inventory + plan export-ready for your next questionnaire or audit. That artifact *is* your [answer to the PQC line item](/post-quantum-cryptography-for-security-questionnaires/).
+
+## Worked example: one inventory, three verdicts
+
+Here's how Phase 1 and Phase 2 play out on three hypothetical inventory rows for a company running a SaaS product behind a CDN.
+
+| Inventory row | What the check found | Tier | Why |
+|---|---|---|---|
+| `app.example.com` (customer data, retained for years) | Browser-to-edge: `X25519MLKEM768`. Edge-to-origin: `X25519` | **1 — partly done** | Long secrecy lifetime and public exposure. The edge is migrated but the origin hop is still classical, so the row isn't done |
+| Nightly database backups to object storage, kept 7 years under the company's own retention policy | Data keys wrapped with RSA-2048 | **1** | Long-retention confidential data. Re-wrap under ML-KEM-based key establishment before anything at lower risk |
+| Firmware signing key for a hardware appliance | ECDSA P-256, key in an HSM that doesn't support ML-DSA | **2 — long lead time** | Forgery needs a real-time quantum computer, so it's not urgent in the harvest-now sense. But the HSM replacement takes procurement time, so start now |
+
+The first row is the failure mode to watch for. The public handshake check passes, someone ticks the box, and the backend hop carrying the same customer data stays classical. Record each hop as its own inventory row and you won't hit it.
+
+The second row shows why secrecy lifetime outranks exposure. Backups never touch the public internet, but anything an attacker exfiltrates or intercepts in transit to storage stays readable for as long as RSA holds.
 
 ## The fastest way to start Phase 1
 

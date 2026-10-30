@@ -18,6 +18,9 @@ const guides = defineCollection({
     word_count: z.number().optional(),
     last_updated: z.coerce.date().optional(),
     evergreen: z.boolean().default(true),
+    // Rendered as a visible FAQ section after the article AND as FAQPage
+    // JSON-LD — one source, so the schema always matches the visible text.
+    faq: z.array(z.object({ q: z.string(), a: z.string() })).default([]),
   }),
 });
 

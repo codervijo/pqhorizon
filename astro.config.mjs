@@ -34,6 +34,12 @@ export default defineConfig({
   // back "URL is unknown to Google". Make it explicit so every page's
   // canonical matches its served URL. Enforced by CHECK_161.
   trailingSlash: 'always',
+  // v1.C — retargeted slugs. Static output emits an instant meta-refresh page
+  // with rel=canonical to the new URL (Google treats it as a permanent
+  // redirect). Not public/_redirects: CHECK_053 forbids that file.
+  redirects: {
+    '/nist-post-quantum-cryptography-standards/': '/ml-kem-vs-ml-dsa/',
+  },
   integrations: [
     sitemap({
       // Attach <lastmod> per URL. The homepage (path '') has no content file,

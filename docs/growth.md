@@ -73,3 +73,12 @@ https://search.google.com/search-console directly.
 - **Action:** v1.B — added `<meta robots>`, `og:image`/`twitter:image`, GA4 (gated on `PUBLIC_GA_ID`), tsconfig; IndexNow ping and GSC "Request indexing" for the 3 non-indexed URLs after deploy.
 - **Result:** TBD — review 2026-11-27
 - **Learning:** TBD
+
+## 2026-10-30 — v1.C: guide content depth + standards page retargeted to "ML-KEM vs ML-DSA"
+- **Status:** active
+- **Hypothesis:** A DR-0 site can't win the head term "nist post-quantum cryptography standards" against NIST itself, and that page duplicated the indexed `-2026` page. Retargeted to the comparison query "ML-KEM vs ML-DSA" (top Google Autocomplete for both terms), it gets indexed and earns impressions. Adding sourced FAQs (with FAQPage schema) and worked examples to all 9 guides lifts impressions on long-tail question queries.
+- **KPI:** indexed count (target 10/10 incl. `/ml-kem-vs-ml-dsa/`); impressions for `ml-kem vs ml-dsa` and the FAQ questions; overall 28d impressions
+- **Baseline:** 28 impressions · 0 clicks · avg position ~37 (28d) · 7/10 indexed · `/ml-kem-vs-ml-dsa/` new (old slug crawled-not-indexed)
+- **Action:** old slug `/nist-post-quantum-cryptography-standards/` → `/ml-kem-vs-ml-dsa/` (meta-refresh + canonical); 4–6 FAQs per guide; worked examples with failure cases; titles ≤60; timelines updated to final NIST IR 8547.
+- **Result:** TBD — review 2026-11-27
+- **Learning:** TBD

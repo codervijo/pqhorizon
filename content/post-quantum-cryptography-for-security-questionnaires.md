@@ -1,5 +1,5 @@
 ---
-title: "How to Answer Post-Quantum Cryptography Questions in Security Questionnaires and RFPs"
+title: "How to Answer PQC Questions on Security Questionnaires"
 slug: post-quantum-cryptography-for-security-questionnaires
 description: "How to answer post-quantum cryptography questions in security questionnaires and RFPs: what they ask, a response template, and the evidence to back it."
 target_keyword: post-quantum cryptography for security questionnaires
@@ -10,8 +10,17 @@ secondary_keywords:
   - PQC compliance response
 search_intent: "A security lead just received a PQC line item on a questionnaire or RFP they can't answer and needs to respond credibly, fast."
 word_count: 800
-last_updated: 2026-07-04
+last_updated: 2026-10-30
 evergreen: true
+faq:
+  - q: "What is crypto agility?"
+    a: "NIST defines cryptographic agility as the capabilities needed to replace and adapt cryptographic algorithms in protocols, applications, software, hardware, firmware and infrastructure while preserving security and ongoing operations (NIST CSWP 39). On a questionnaire it means you can change algorithms through configuration or a library upgrade, not a re-architecture."
+  - q: "What is a cryptographic inventory?"
+    a: "A record of where your systems use cryptography, which algorithms and key sizes they use, and which of those are quantum-vulnerable. NIST IR 8547 tells organizations to begin the post-quantum migration with cryptographic inventories, which is why reviewers ask for one first."
+  - q: "Is RSA quantum safe?"
+    a: "No. Shor's algorithm breaks RSA at any key size on a large enough quantum computer. NIST IR 8547 deprecates RSA after 2030 and disallows it under NIST standards after 2035, so the honest questionnaire answer is that you use it today and have a dated plan to replace it."
+  - q: "What is the NIST deadline for post-quantum cryptography?"
+    a: "NIST IR 8547 (final, October 2026) deprecates quantum-vulnerable public-key algorithms after 2030 and disallows them after 2035. Federal high-value and high-impact systems face earlier dates under OMB M-26-15: post-quantum key establishment by December 31, 2030 and post-quantum signatures by December 31, 2031."
 ---
 
 # How to Answer the Post-Quantum Question on a Security Questionnaire or RFP
@@ -44,6 +53,24 @@ A credible response has three parts. Adapt this structure:
 
 That answer is honest, demonstrably informed, and reads as *in control*. It converts a weakness into evidence of maturity.
 
+## Three worked answers
+
+The phrasings below are representative of how these items are worded. They are not quoted from any specific questionnaire framework.
+
+**"Do you maintain an inventory of the cryptographic algorithms used in your products and services?"**
+Situation (hypothetical): you've checked the TLS handshake on all 14 of your public domains, but nothing internal yet.
+Answer: "Yes, partially. We have documented the key-exchange group, TLS version and certificate algorithm for all 14 internet-facing domains. Eleven negotiate hybrid post-quantum key exchange (X25519MLKEM768); three are classical-only and scheduled for remediation. Internal systems are being inventoried next, starting with VPN and service-to-service TLS."
+Why it works: a partial inventory with real numbers and a stated next step beats an unqualified "yes." It's also verifiable, because a reviewer can run the same handshake check against your domains.
+
+**The failure case — "Are you prepared for the threat that quantum computing poses to encryption?"**
+Weak answer: "Yes. All traffic uses TLS 1.3 and data is encrypted with AES-256."
+Why it fails: neither fact answers the question. TLS 1.3 is only post-quantum when the handshake negotiates a hybrid group such as `X25519MLKEM768` ([RFC 10024](https://datatracker.ietf.org/doc/rfc10024/)). Plain X25519 over TLS 1.3 is still classical, and a reviewer who checks your handshake will see it. AES-256 isn't the weak point. [NIST's FAQ](https://csrc.nist.gov/projects/post-quantum-cryptography/faqs) considers AES-128, -192 and -256 safe. The exposure is the RSA or elliptic-curve key exchange that delivered the AES key.
+Better answer: say which endpoints negotiate hybrid key exchange, which don't, and when the rest will.
+
+**"What is your timeline for adopting NIST post-quantum standards?"**
+Answer: anchor your dates to the published schedule rather than inventing your own. "Our roadmap follows NIST IR 8547, which deprecates quantum-vulnerable algorithms after 2030 and disallows them after 2035. Hybrid ML-KEM key exchange on public endpoints by (your committed date); internal service-to-service TLS by (date); certificate and signing migration to ML-DSA as our CA and HSM vendors support it."
+Why it works: the reviewer can check the external anchor, which is [NIST IR 8547](https://doi.org/10.6028/NIST.IR.8547). The internal dates are ones you control, and the order (key exchange first, signatures later) matches NIST's reasoning that harvest-now-decrypt-later threatens key exchange, not signatures.
+
 ## The evidence you need behind it
 
 Every strong answer above is backed by two artifacts:
@@ -67,4 +94,4 @@ Build the evidence from your public TLS first, then use the answer template abov
 
 ---
 
-*Related: [Post-quantum readiness self-check](/post-quantum-readiness/) · [Migration checklist](/post-quantum-cryptography-migration-checklist/) · [NIST post-quantum standards](/nist-post-quantum-cryptography-standards/) · [Harvest now, decrypt later](/harvest-now-decrypt-later/)*
+*Related: [Post-quantum readiness self-check](/post-quantum-readiness/) · [Migration checklist](/post-quantum-cryptography-migration-checklist/) · [ML-KEM vs ML-DSA](/ml-kem-vs-ml-dsa/) · [Harvest now, decrypt later](/harvest-now-decrypt-later/)*
